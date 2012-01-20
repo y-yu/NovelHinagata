@@ -1,0 +1,19 @@
+open build/LaTeX
+
+DefineCommandVars()
+
+FindDirs(basename) =
+	dirs = $(set $(dirname $(ls $(basename)[1-9]*)))
+	
+	return $(dirs)
+
+DepsUpdate(dirs) = 
+	deps = 
+		foreach(dir, $(dirs))
+			foreach(file, $(ls $(dir)))
+				value $(file)
+	
+	return $(deps)
+
+.SUBDIRS: .
+

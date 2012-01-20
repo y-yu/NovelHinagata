@@ -1,0 +1,23 @@
+dirs = $(FindDirs ./chapter)
+
+TEXDEPS      = $(DepsUpdate $(dirs))
+LATEX        = platex
+DVIPDFM      = dvipdfmx
+DVIPDFMFLAGS = -p b6
+
+body.tex : :value: $(DepsUpdate $(dirs))
+	section
+		fp = $(fopen $@, w)
+		foreach(dir, $(dirs))
+			fprintln($(fp), $""\chapter{}"")			
+			foreach(file, $(set $(ls $(dir))) )
+				fprintln($(fp), $""\section{}"")
+				fprintln($(fp), $""\input{$(file)}"")
+				fprintln($(fp), $""\clearpage"")
+
+cp main.pdf ~/Dropbox/Public/novel/KeisankizyoronII/
+
+LaTeXDocument(main, main)
+
+.DEFAULT: main.pdf
+
